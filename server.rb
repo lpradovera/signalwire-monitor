@@ -4,10 +4,13 @@ class Monitor
   def self.get_stats
     command = `wmic cpu get loadpercentage`
     cpu = command.split("\n")[2].strip
-    command = `nvidia-smi --query-gpu=utilization.gpu,utilization.memory, memory.total,memory.free,memory.used --format=csv`
-    row = command.split("\n")[1]
-    gpu, mem = row.gsub(' %', '').split(', ')
-    [cpu, gpu.strip, mem.strip]
+    command = `nvidia-smi pmon -c 1`
+    row = command.split("\n")[2].split()
+    gpu = row[3]
+    enc = row[5]
+    [cpu, gpu, enc]
+  rescue
+    [0, 0, 0]
   end
 end
 
