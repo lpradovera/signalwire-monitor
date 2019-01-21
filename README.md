@@ -10,3 +10,7 @@ gem install bundler
 bundle install
 bundle exec ruby server.rb
 ```
+
+## Registering service on Windows
+
+Run `bundle install` first, then `bundle exec ruby register_service.rb`
