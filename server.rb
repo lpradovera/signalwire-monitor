@@ -6,9 +6,9 @@ class Monitor
     cpu = command.split("\n")[2].strip
     command = `nvidia-smi dmon -c 1`
     row = command.split("\n")[2].split()
-    gpu = row[3].to_i
-    enc = row[5].to_i
-    dec = row[6].to_i
+    gpu = row[4].to_i
+    enc = row[6].to_i
+    dec = row[7].to_i
     [cpu, gpu, enc, dec]
   rescue
     [0, 0, 0, 0]
@@ -20,4 +20,8 @@ set :port, 8088
 
 get '/stats' do
   Monitor.get_stats.join(', ')
+end
+
+get '/raw' do
+  `nvidia-smi dmon -c 1`
 end
